@@ -965,7 +965,7 @@ TR_RegisterCandidate::processLiveOnEntryBlocks(TR::Block * * blocks, int32_t *bl
          TR_ScratchList<TR_Structure> unreferencedLoops(comp->trMemory());
          TR_ScratchList<TR_Structure> referencedLoops(comp->trMemory());
          if ((numUnreferencedBlocksAtThisFrequency > 0) &&
-             (comp->getOptions()->getOption(TR_EnableRangeSplittingGRA) ||  // move this check above ?
+             (comp->getOption(TR_EnableRangeSplittingGRA) ||  // move this check above ?
               (comp->cg()->areAssignableGPRsScarce())))
             {
             bool seenBlockAtThisFrequency = false;
@@ -1537,10 +1537,6 @@ TR_RegisterCandidate::processLiveOnEntryBlocks(TR::Block * * blocks, int32_t *bl
          // } while ((block = block->getNextBlock()) && block->isExtensionOfPreviousBlock());
          }
       }
-
-   setDontAssignVMThreadRegister(false);
-   if ((loadsAndStores - reduction) <= 0)
-      setDontAssignVMThreadRegister(true);
 
    if ((numberOfBlocks == 0) && (loadsAndStores > 0))
       numberOfBlocks = 1;
